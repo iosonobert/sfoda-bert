@@ -12,7 +12,6 @@
 import gzip
 from scipy import spatial
 import numpy as np
-from .maptools import readShpBathy, readraster #,ll2utm 
 from .myproj import MyProj
 #from kriging import kriging
 from .fkriging import kriging
@@ -26,6 +25,9 @@ import matplotlib.pyplot as plt
 # testing stuff
 import pdb
 #import sunpy
+
+class NoMoreGdalException(Exception):
+    pass
 
 class interpXYZ(object):
     "Class for interpolating xyz data"""
@@ -361,15 +363,17 @@ class Inputs(object):
             LL,self.Zin = read_xyz(self.infile)
             self.Zin = np.ravel(self.Zin)
         elif self.infile[-3:]=='shp':
-            LL,self.Zin = readShpBathy(self.infile,FIELDNAME=self.shapefieldname)
+            raise(NoMoreGdalException('This option was ed on GDAL and is function is no longer supported. Request rewrite with some other library.'))
+            # LL,self.Zin = readShpBathy(self.infile,FIELDNAME=self.shapefieldname)
         elif self.infile[-3:]=='.nc':
             self.loadnc()
             LL = self._returnXY(self.xgrd,self.ygrd)
             self.Zin = np.ravel(self.Zin)
         elif self.infile[-3:] in ['dem','asc']:
-            xgrd,ygrd,self.Zin = readraster(self.infile)
-            LL = self._returnXY(xgrd,ygrd)
-            self.Zin = np.ravel(self.Zin)
+            raise(NoMoreGdalException('This option was ed on GDAL and is function is no longer supported. Request rewrite with some other library.'))
+            # xgrd,ygrd,self.Zin = readraster(self.infile)
+            # LL = self._returnXY(xgrd,ygrd)
+            # self.Zin = np.ravel(self.Zin)
         
         self.npt = len(LL)
         
