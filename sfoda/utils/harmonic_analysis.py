@@ -12,6 +12,7 @@ from scipy import linalg, optimize
 
 from datetime import datetime
 from . import othertime
+import sfoda.tides.cons as tcons
 
 import pdb
 
@@ -292,6 +293,7 @@ def complex2phsamp(C):
     """
     return np.angle(C), np.abs(C)
  
+
 def getTideFreq(Fin=None):
     """
     Function removed. 
@@ -299,4 +301,7 @@ def getTideFreq(Fin=None):
     Could pass
     """
 
-    raise(Exception('Function moved to sfoda.tides.cons.getTideFreq - could wrap this rather than raise an error.'))
+    freq, fout = tcons.getTideFreq(Fin=Fin)
+
+    return freq, fout
+    # raise(Exception('Function moved to sfoda.tides.cons.getTideFreq - could wrap this rather than raise an error.'))
